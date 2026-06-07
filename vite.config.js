@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: './',
-  base: './', // Относительные пути для корректной работы на GitHub Pages
+  base: './mesto-production', // Относительные пути для корректной работы на GitHub Pages
   server: {
     open: true,
     host: 'localhost',
