@@ -118,7 +118,8 @@ const handlePreviewPicture = ({ name, link }) => {
 const handleLikeCard = (cardId, isLiked, cardElement) => {
   changeLikeCardStatus(cardId, isLiked)
     .then((updatedCard) => {
-      updateCardLikeStatus(cardElement, isLiked, updatedCard.likes.length);
+      const isLikedNow = updatedCard.likes.some((user) => user._id === currentUserId);
+      updateCardLikeStatus(cardElement, isLikedNow, updatedCard.likes.length);
     })
     .catch((err) => {
       console.log(err);
