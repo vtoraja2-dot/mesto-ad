@@ -11,6 +11,7 @@ import {
   deleteCard as deleteCardFromServer,
   changeLikeCardStatus,
 } from "./components/api.js";
+import { updateCardLikeStatus } from './components/card.js';
 
 // Идентификатор текущего пользователя (заполняется после загрузки данных с сервера)
 let currentUserId = null;
@@ -114,11 +115,10 @@ const handlePreviewPicture = ({ name, link }) => {
   openModalWindow(imageModalWindow);
 };
 
-const handleLikeCard = (cardId, isLiked, likeButton, likeCountElement) => {
+const handleLikeCard = (cardId, isLiked, cardElement) => {
   changeLikeCardStatus(cardId, isLiked)
     .then((updatedCard) => {
-      likeButton.classList.toggle("card__like-button_is-active");
-      likeCountElement.textContent = updatedCard.likes.length;
+      updateCardLikeStatus(cardElement, updatedCard.liked, updatedCard.likes.length);
     })
     .catch((err) => {
       console.log(err);
@@ -204,7 +204,6 @@ const handleCardFormSubmit = (evt) => {
         })
       );
       closeModalWindow(cardFormModalWindow);
-      cardForm.reset();
     })
     .catch((err) => {
       console.log(err);

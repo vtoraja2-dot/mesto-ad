@@ -40,11 +40,11 @@ export const createCardElement = (cardData, userId, handlers) => {
       onDeleteCard(cardData._id, cardElement);
     });
   }
-
+  // 1. Вместо likeButton, likeCountElement передаем cardElement (весь элемент карточки)
   if (onLikeCard) {
     likeButton.addEventListener("click", () => {
       const isLiked = likeButton.classList.contains("card__like-button_is-active");
-      onLikeCard(cardData._id, isLiked, likeButton, likeCountElement);
+      onLikeCard(cardData._id, !isLiked, cardElement); //!isLiked (потому что меняю состояние на противоположное)
     });
   }
 
@@ -55,4 +55,12 @@ export const createCardElement = (cardData, userId, handlers) => {
   }
 
   return cardElement;
+};
+// по ревью добавил метод для обновления лайков
+export const updateCardLikeStatus = (cardElement, isLiked, likesCount) => {
+  const likeButton = cardElement.querySelector(".card__like-button");
+  const likeCountElement = cardElement.querySelector(".card__like-count");
+
+  likeButton.classList.toggle("card__like-button_is-active", isLiked);
+  likeCountElement.textContent = likesCount;
 };
